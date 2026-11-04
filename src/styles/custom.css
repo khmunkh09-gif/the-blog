@@ -1,0 +1,70 @@
+/* Theme tokens (RGB triplets so Tailwind opacity utilities work) */
+:root {
+  --bg: 255 255 255;
+  --fg: 10 13 32;
+  --muted: 102 112 133;
+  --line: 223 226 234;
+  --accent: 91 63 214;
+  --surface: 244 245 250;
+  --menu-bg: 255 255 255;
+}
+.dark {
+  --bg: 8 11 30;
+  --fg: 255 255 255;
+  --muted: 138 143 168;
+  --line: 86 90 112;
+  --accent: 122 92 240;
+  --surface: 20 24 48;
+  --menu-bg: 17 17 17;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+::selection { background: rgb(var(--accent) / 0.5); }
+
+/* Giant page headline: scales with its container so it always spans the full width */
+.fit-title {
+  container-type: inline-size;
+}
+.fit-title > h1 {
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  text-align: center;
+}
+
+/* Card image zoom + arrow nudge */
+.card-img { transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.card:hover .card-img { transform: scale(1.05); }
+.card .card-arrow { transition: transform 0.25s ease, opacity 0.25s ease; opacity: 0.8; }
+.card:hover .card-arrow { transform: translate(2px, -2px); opacity: 1; }
+.card .card-title { background-image: linear-gradient(currentColor, currentColor); background-size: 0 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size 0.35s ease; }
+.card:hover .card-title { background-size: 100% 1px; }
+
+/* Nav underline */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px;
+  background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.25s ease;
+}
+.nav-link:hover::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
+
+/* Stagger entrance for card grids */
+.reveal > * { animation: fadeUp 0.6s ease both; }
+.reveal > *:nth-child(2) { animation-delay: 0.06s; }
+.reveal > *:nth-child(3) { animation-delay: 0.12s; }
+.reveal > *:nth-child(4) { animation-delay: 0.18s; }
+.reveal > *:nth-child(5) { animation-delay: 0.24s; }
+.reveal > *:nth-child(6) { animation-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
